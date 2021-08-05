@@ -1,11 +1,10 @@
-class Subsystem {
+import 'abstract_flags.dart';
+
+class Subsystem extends Flags{
   static const GUI = Subsystem._internal(0x2, 'GUI');
   static const Console = Subsystem._internal(0x3, 'Console');
 
-  final int flag;
-  final String name;
-
-  const Subsystem._internal(this.flag, this.name);
+  const Subsystem._internal(int flag, String name) : super(flag, name);
 
   static final all = List<Subsystem>.unmodifiable([
     GUI,
@@ -19,10 +18,5 @@ class Subsystem {
       }
     }
     throw 'flag not found';
-  }
-
-  @override
-  String toString() {
-    return '0x${flag.toRadixString(16)} ($name)';
   }
 }

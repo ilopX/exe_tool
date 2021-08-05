@@ -1,11 +1,10 @@
-class PESignature {
+import 'abstract_flags.dart';
+
+class PESignature extends Flags {
   static const PE = PESignature._internal(0x10b, 'PE');
   static const PEPlus = PESignature._internal(0x20b, 'PE+');
 
-  final int flag;
-  final String name;
-
-  const PESignature._internal(this.flag, this.name);
+  const PESignature._internal(int flag, String name) : super(flag, name);
 
   static final all = List<PESignature>.unmodifiable([
     PE,
@@ -19,10 +18,5 @@ class PESignature {
       }
     }
     throw 'flag not found';
-  }
-
-  @override
-  String toString() {
-    return '0x${flag.toRadixString(16)} ($name)';
   }
 }
