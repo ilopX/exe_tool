@@ -4,7 +4,7 @@ class PESignature extends Flags {
   static const PE = PESignature._internal(0x10b, 'PE');
   static const PEPlus = PESignature._internal(0x20b, 'PE+');
 
-  const PESignature._internal(int flag, String name) : super(flag, name);
+  const PESignature._internal(int flag, String title) : super(flag, title);
 
   static final all = List<PESignature>.unmodifiable([
     PE,

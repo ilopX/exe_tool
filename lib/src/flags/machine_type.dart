@@ -4,7 +4,7 @@ class MachineType extends Flags {
   static const amd64 = MachineType._internal(0x8664, 'x64');
   static const i368 = MachineType._internal(0x14c, 'x86');
 
-  const MachineType._internal(int flag, String name): super(flag, name);
+  const MachineType._internal(int flag, String title): super(flag, title);
 
   static final all = List<MachineType>.unmodifiable([
     amd64,

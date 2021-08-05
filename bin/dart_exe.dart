@@ -9,9 +9,9 @@ void main(List<String> arguments) async {
 
     print('Open: ${exe.fileName}');
     print('PE address: 0x${pe.address.pe.toRadixString(16)}');
-    print('machine: ${pe.machine}');
-    print('peType: ${pe.magicPE}');
-    print('subsystem: ${pe.subsystem}');
+    print('${pe.machine}');
+    print('${pe.magicPE}');
+    print('${pe.subsystem}');
 
     pe.subsystem = Subsystem.GUI;
 

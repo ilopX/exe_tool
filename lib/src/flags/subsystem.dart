@@ -4,7 +4,7 @@ class Subsystem extends Flags{
   static const GUI = Subsystem._internal(0x2, 'GUI');
   static const Console = Subsystem._internal(0x3, 'Console');
 
-  const Subsystem._internal(int flag, String name) : super(flag, name);
+  const Subsystem._internal(int flag, String title) : super(flag, title);
 
   static final all = List<Subsystem>.unmodifiable([
     GUI,

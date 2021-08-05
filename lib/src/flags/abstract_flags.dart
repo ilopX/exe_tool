@@ -1,15 +1,14 @@
 abstract class Flags {
   final int flag;
-  final String name;
+  final String title;
 
-  const Flags(this.flag, this.name);
+  const Flags(this.flag, this.title);
 
   @override
   String toString() {
-    return '0x${flag.toRadixString(16)} ($name)';
+    final name = runtimeType.toString();
+    return '$name: 0x${flag.toRadixString(16)} ($title)';
   }
-
-  static late final List all;
 
   static T fromFlag<T extends Flags>(int flag, List<T> all) {
     for(final item in all) {
