@@ -1,1 +1,27 @@
-https://github.com/ilopX/exe_tool/blob/64f96daac79060ae4c99cf1b27ee03d03e8a2c08/bin/dart_exe.dart#L1-L24
+```dart
+import 'dart:io';
+
+import 'package:dart_exe/dart_exe.dart';
+
+void main(List<String> arguments) async {
+  final exe = ExeFile(r'd:\downloads\function.exe');
+  try {
+    final pe = exe.openPE();
+
+    print('Open: ${exe.fileName}');
+    print('PE address: 0x${pe.address.pe.toRadixString(16)}');
+    print('${pe.machine}');
+    print('${pe.magicPE}');
+    print('${pe.subsystem}');
+
+    pe.subsystem = Subsystem.GUI;
+
+  } catch (e) {
+    stderr.writeln(e);
+  }
+  finally {
+    exe.close();
+  }
+}
+
+```
