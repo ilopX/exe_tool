@@ -11,12 +11,5 @@ class MachineType extends Flags {
     i368,
   ]);
 
-  static MachineType fromFlag(int flag) {
-    for(final item in MachineType.all) {
-      if (item.flag == flag) {
-        return item;
-      }
-    }
-    throw 'flag not found';
-  }
+  static MachineType fromFlag(int flag) => Flags.fromFlag(flag, all);
 }

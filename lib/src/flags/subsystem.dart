@@ -11,12 +11,5 @@ class Subsystem extends Flags{
     Console,
   ]);
 
-  static Subsystem fromFlag(int flag) {
-    for(final item in Subsystem.all) {
-      if (item.flag == flag) {
-        return item;
-      }
-    }
-    throw 'flag not found';
-  }
+  static Subsystem fromFlag(int flag)  => Flags.fromFlag(flag, all);
 }

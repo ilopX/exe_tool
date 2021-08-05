@@ -11,12 +11,5 @@ class PESignature extends Flags {
     PEPlus,
   ]);
 
-  static PESignature fromFlag(int flag) {
-    for(final item in PESignature.all) {
-      if (item.flag == flag) {
-        return item;
-      }
-    }
-    throw 'flag not found';
-  }
+  static PESignature fromFlag(int flag)  => Flags.fromFlag(flag, all);
 }
