@@ -11,7 +11,7 @@ dev_dependencies:
 ## Run
 ```batch
 dart compile exe app.dart
-pub run subsystem=gui showInfo d:\app.exe
+pub run dart_exe subsystem=gui showInfo d:\app.exe
 ```
 
 ## Example
