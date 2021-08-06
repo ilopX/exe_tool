@@ -34,6 +34,7 @@ class ExeFile {
       final osError = fileException.osError?.message ?? '';
       throw 'Open file error. ' + osError;
     }
+
     _isFileOpen = true;
     _io = IOImage(_file);
   }
@@ -55,6 +56,7 @@ class ExeFile {
 
   void close() {
     if (_isFileOpen) {
+      _isFileOpen = false;
       _file.closeSync();
     }
   }
