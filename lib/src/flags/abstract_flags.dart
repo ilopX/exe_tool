@@ -1,3 +1,5 @@
+import 'package:dart_exe/src/common/console_colors.dart';
+
 abstract class Flags {
   final int flag;
   final String title;
@@ -7,7 +9,8 @@ abstract class Flags {
   @override
   String toString() {
     final name = runtimeType.toString();
-    return '$name: 0x${flag.toRadixString(16)} ($title)';
+    final address = blueText('0x${flag.toRadixString(16)}');
+    return '$name: $address ($title)';
   }
 
   static T fromFlag<T extends Flags>(int flag, List<T> all) {

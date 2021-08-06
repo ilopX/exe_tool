@@ -1,7 +1,6 @@
 import 'dart:io';
 
-import 'package:dart_exe/dart_exe.dart';
-import 'package:dart_exe/src/essential/win_pe.dart';
+import 'package:dart_exe/bin_dart_exe.dart';
 
 void main(List<String> arguments) async {
   final args = parseArgs(arguments);
@@ -16,15 +15,6 @@ void main(List<String> arguments) async {
   finally {
     exe.close();
   }
-}
-
-void printExeInfo(String fileName, WinPE pe, bool isSubsystemChanged) {
-  print('Open: $fileName');
-  print('PE address: ${blueText('0x${pe.address.pe.toRadixString(16)}')}');
-  print('${pe.machine}');
-  print('${pe.magicPE}');
-  print('${pe.subsystem}${isSubsystemChanged ? greenText(' + changed') : ''}');
-
 }
 
 Args parseArgs(List<String> arguments) {
@@ -47,52 +37,12 @@ bool changeSubsystem(Args args, WinPE pe) {
   return false;
 }
 
-String greenText(String text) => '\x1B[32m$text\x1B[0m';
-String blueText(String text) => '\x1B[34m$text\x1B[0m';
-
-class Args {
-  Args(List<String> arguments) {
-    final arg = arguments.join(' ');
-
-    final reg = RegExp(
-      r'^ *(subsystem) *= *(GUI|Console) +(.+)$', caseSensitive: false,)
-        .allMatches(arg);
-
-    if (reg.isEmpty) {
-      throw 'Arguments error. '
-          'Example: subsystem = GUI d:\\file.exe';
-    }
-
-    final match = reg.elementAt(0);
-
-    if (match.groupCount != 3) {
-      throw 'Arguments error. '
-          'Example: subsystem = GUI d:\\file.exe';
-    }
-
-    final flagName = (match.group(1) ?? '').toLowerCase();
-    if (flagName != 'subsystem') {
-      throw 'Arguments error. First argument should be "subsystem"';
-    }
-
-    _subsystem = (match.group(2) ?? '').toLowerCase();
-    if (_subsystem != 'gui' && _subsystem != 'console') {
-      throw 'Arguments error("$_subsystem"). '
-          'Second argument should be "gui" or "console"';
-    }
-
-    _fileName = (match.group(3) ?? '');
-    if (_fileName == '') {
-      throw 'Arguments error. '
-          'Third argument should be a file name';
-    }
-  }
-
-  String get fileName => _fileName;
-  bool get isSubsystem => _subsystem != '';
-  String get subsystem => _subsystem;
-
-  String _fileName = '';
-  String _subsystem = '';
+void printExeInfo(String fileName, WinPE pe, bool isSubsystemChanged) {
+  print('Open: $fileName');
+  print('0x3c: PE address: ${blueText('${toHex(pe.address.pe)}')}');
+  print('${toHex(pe.address.machine)}: ${pe.machine}');
+  print('${toHex(pe.address.magic)}: ${pe.magicPE}');
+  print('${toHex(pe.address.subsystem)}: ${pe.subsystem}${isSubsystemChanged ? greenText(' + changed') : ''}');
 }
 
+String toHex(int address) => '0x${address.toRadixString(16)}';
