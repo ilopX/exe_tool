@@ -18,4 +18,10 @@ abstract class Flags {
     }
     throw 'flag not found';
   }
+
+  static T fromString<T extends Flags> (String text, List<T> all) {
+    return all.firstWhere(
+            (i) => i.title.toLowerCase() == text.toLowerCase()
+    );
+  }
 }

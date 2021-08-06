@@ -12,4 +12,6 @@ class Subsystem extends Flags{
   ]);
 
   static Subsystem fromFlag(int flag)  => Flags.fromFlag(flag, all);
+
+  static Subsystem fromString(String text) => Flags.fromString(text, all);
 }
