@@ -9,7 +9,8 @@ dev_dependencies:
 
 ## Run
 ```batch
-pub run dart_exe subsystem = console D:\app.exe
+dart compile exe app.dart
+pub run dart_exe subsystem=gui D:\app.exe
 ```
 
 ## Example
@@ -39,11 +40,12 @@ void main(List<String> arguments) async {
   }
 }
 ```
+
 ### Output:
 ```
-Open: d:\downloads\function.exe
-PE address: 0x118
-MachineType: 0x8664 (x64)
-PESignature: 0x20b (PE+)
-Subsystem: 0x2 (GUI)
+Open: d:\app.exe
+0x3c: PE address: 0x118
+0x11c: MachineType: 0x8664 (x64)
+0x130: PEType: 0x20b (PE+)
+0x174: Subsystem: 0x2 (GUI) + changed
 ```
