@@ -1,7 +1,7 @@
 import '../common/address_book.dart';
 import '../common/io_image.dart';
 import '../flags/machine_type.dart';
-import '../flags/pe_signature.dart';
+import '../flags/pe_type.dart';
 import '../flags/subsystem.dart';
 
 class WinPE {
@@ -19,9 +19,9 @@ class WinPE {
     return MachineType.fromFlag(machineFlag);
   }
 
-  PESignature get magicPE {
-    final peFlag = _io.read(address: address.magic);
-    return PESignature.fromFlag(peFlag);
+  PEType get peType {
+    final peFlag = _io.read(address: address.peType);
+    return PEType.fromFlag(peFlag);
   }
 
   Subsystem get subsystem {

@@ -41,7 +41,7 @@ void printExeInfo(String fileName, WinPE pe, bool isSubsystemChanged) {
   print('Open: $fileName');
   print('0x3c: PE address: ${blueText('${toHex(pe.address.pe)}')}');
   print('${toHex(pe.address.machine)}: ${pe.machine}');
-  print('${toHex(pe.address.magic)}: ${pe.magicPE}');
+  print('${toHex(pe.address.peType)}: ${pe.peType}');
   print('${toHex(pe.address.subsystem)}: ${pe.subsystem}${isSubsystemChanged ? greenText(' + changed') : ''}');
 }
 
