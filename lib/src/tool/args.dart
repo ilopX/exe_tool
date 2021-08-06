@@ -3,11 +3,11 @@ class Args {
     final arg = arguments.join(' ');
 
     final reg = RegExp(
-      r'^ *(subsystem) *= *(GUI|Console) +(.+)$',
+      r'^ *(subsystem) *= *(GUI|Console) +(showInfo)? *(.+)$',
       caseSensitive: false,
     ).allMatches(arg);
 
-    if (reg.isEmpty && reg.elementAt(0).groupCount != 3) {
+    if (reg.isEmpty && reg.elementAt(0).groupCount != 4) {
       throw 'Arguments error. '
           'Example: subsystem = GUI d:\\file.exe';
     }
@@ -25,17 +25,26 @@ class Args {
           'Second argument should be "gui" or "console"';
     }
 
-    _fileName = (match.group(3) ?? '');
+    _isShowInfo = (match.group(3) != null);
+
+    _fileName = (match.group(4) ?? '');
     if (_fileName == '') {
       throw 'Arguments error. '
-          'Third argument should be a file name';
+          'Foure argument should be a file name';
     }
   }
 
+  String _fileName = '';
   String get fileName => _fileName;
+
+  String _subsystem = '';
   bool get isSubsystem => _subsystem != '';
   String get subsystem => _subsystem;
 
-  String _fileName = '';
-  String _subsystem = '';
+  bool _isShowInfo = false;
+  bool get isShowInfo => _isShowInfo;
+
+
+
+
 }

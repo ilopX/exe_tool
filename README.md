@@ -11,7 +11,7 @@ dev_dependencies:
 ## Run
 ```batch
 dart compile exe app.dart
-pub run dart_exe subsystem=gui D:\app.exe
+pub run subsystem=gui showInfo d:\app.exe
 ```
 
 ## Example
@@ -44,9 +44,9 @@ void main(List<String> arguments) async {
 
 ### Output:
 ```
-Open: d:\app.exe
+ExeFile: d:\downloads\function.exe + changed(GUI)
 0x3c: PE address: 0x118
 0x11c: MachineType: 0x8664 (x64)
 0x130: PEType: 0x20b (PE+)
-0x174: Subsystem: 0x2 (GUI) + changed
+0x174: Subsystem: 0x2 (GUI)
 ```
