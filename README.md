@@ -23,5 +23,12 @@ void main(List<String> arguments) async {
     exe.close();
   }
 }
-
+```
+### Output:
+```
+Open: d:\downloads\function.exe
+PE address: 0x118
+MachineType: 0x8664 (x64)
+PESignature: 0x20b (PE+)
+Subsystem: 0x2 (GUI)
 ```
