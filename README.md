@@ -1,17 +1,32 @@
+# Hide console dart native
+## Install
+```yaml
+dev_dependencies:
+  dart_exe:
+    git:
+      url: https://github.com/ilopX/exe_tool
+```
+
+## Run
+```batch
+pub run dart_exe subsystem = console D:\app.exe
+```
+
+## Example
 ```dart
 import 'dart:io';
 
 import 'package:dart_exe/dart_exe.dart';
 
 void main(List<String> arguments) async {
-  final exe = ExeFile(r'd:\downloads\function.exe');
+  final exe = ExeFile(r'd:\app.exe');
   try {
     final pe = exe.openPE();
 
     print('Open: ${exe.fileName}');
     print('PE address: 0x${pe.address.pe.toRadixString(16)}');
     print('${pe.machine}');
-    print('${pe.magicPE}');
+    print('${pe.peType}');
     print('${pe.subsystem}');
 
     pe.subsystem = Subsystem.GUI;
