@@ -9,13 +9,13 @@ void main(List<String> arguments) async {
   try {
     final pe = exe.openPE();
 
-    final changed = changeSubsystem(args, pe);
+    final isSubsystemChanged = changeSubsystem(args, pe);
 
     print('Open: ${exe.fileName}');
-    print('PE address: 0x${pe.address.pe.toRadixString(16)}');
+    print('PE address: ${blueText('0x${pe.address.pe.toRadixString(16)}')}');
     print('${pe.machine}');
     print('${pe.magicPE}');
-    print('${pe.subsystem}${changed ? '\x1B[34m - changed\x1B[0m' : ''}');
+    print('${pe.subsystem}${isSubsystemChanged ? greenText(' + changed') : ''}');
 
   } catch (e) {
     stderr.writeln(e);
@@ -36,13 +36,23 @@ bool changeSubsystem(Args args, WinPE pe) {
   return false;
 }
 
+String greenText(String text) => '\x1B[32m$text\x1B[0m';
+String blueText(String text) => '\x1B[34m$text\x1B[0m';
+
 class Args {
   Args(List<String> arguments) {
     final arg = arguments.join(' ');
 
-    final match = RegExp(
+    final reg = RegExp(
       r'^ *(subsystem) *= *(GUI|Console) +(.+)$', caseSensitive: false,)
-        .allMatches(arg).elementAt(0);
+        .allMatches(arg);
+
+    if (reg.isEmpty) {
+      throw 'Arguments error. '
+          'Example: subsystem = GUI d:\\file.exe';
+    }
+
+    final match = reg.elementAt(0);
 
     if (match.groupCount != 3) {
       throw 'Arguments error. '
