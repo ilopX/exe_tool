@@ -4,24 +4,35 @@ import 'package:dart_exe/dart_exe.dart';
 import 'package:dart_exe/src/essential/win_pe.dart';
 
 void main(List<String> arguments) async {
-  final args = Args(arguments);
+  final args = parseArgs(arguments);
   final exe = ExeFile(args.fileName);
   try {
     final pe = exe.openPE();
-
     final isSubsystemChanged = changeSubsystem(args, pe);
-
-    print('Open: ${exe.fileName}');
-    print('PE address: ${blueText('0x${pe.address.pe.toRadixString(16)}')}');
-    print('${pe.machine}');
-    print('${pe.magicPE}');
-    print('${pe.subsystem}${isSubsystemChanged ? greenText(' + changed') : ''}');
-
+    printExeInfo(exe.fileName, pe, isSubsystemChanged);
   } catch (e) {
     stderr.writeln(e);
   }
   finally {
     exe.close();
+  }
+}
+
+void printExeInfo(String fileName, WinPE pe, bool isSubsystemChanged) {
+  print('Open: $fileName');
+  print('PE address: ${blueText('0x${pe.address.pe.toRadixString(16)}')}');
+  print('${pe.machine}');
+  print('${pe.magicPE}');
+  print('${pe.subsystem}${isSubsystemChanged ? greenText(' + changed') : ''}');
+
+}
+
+Args parseArgs(List<String> arguments) {
+  try {
+    return Args(arguments);
+  } catch(e) {
+    stderr.writeln(e);
+    exit(-1);
   }
 }
 

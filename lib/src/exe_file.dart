@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'common/address_table.dart';
+import 'common/address_book.dart';
 import 'common/io_image.dart';
 import 'essential/win_pe.dart';
 
@@ -10,7 +10,7 @@ class ExeFile {
   ExeFile(this.fileName);
 
   late RandomAccessFile _file;
-  late AddressTable _address;
+  late AddressBook _address;
   late IOImage _io;
 
   WinPE openPE() {
@@ -18,7 +18,7 @@ class ExeFile {
     _2_calculateAddress();
     _3_verifyExeFile();
 
-    return WinPE.open(addressTable: _address, read_write: _io);
+    return WinPE.open(addressBook: _address, read_write: _io);
   }
 
   void _1_openFile() {
@@ -37,7 +37,7 @@ class ExeFile {
 
   void _2_calculateAddress() {
     final peAddress = _io.read(address: 0x3c);
-    _address = AddressTable.fromPEAddress(peAddress);
+    _address = AddressBook.calculateFromPEAddress(peAddress);
   }
 
   void _3_verifyExeFile() {

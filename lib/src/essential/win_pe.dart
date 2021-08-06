@@ -1,17 +1,17 @@
-import '../common/address_table.dart';
+import '../common/address_book.dart';
 import '../common/io_image.dart';
 import '../flags/machine_type.dart';
 import '../flags/pe_signature.dart';
 import '../flags/subsystem.dart';
 
 class WinPE {
-  final AddressTable address;
+  final AddressBook address;
   final IOImage _io;
 
   WinPE.open({
-    required AddressTable addressTable,
+    required AddressBook addressBook,
     required IOImage read_write,
-  })  : address = addressTable,
+  })  : address = addressBook,
         _io = read_write;
 
   MachineType get machine {
