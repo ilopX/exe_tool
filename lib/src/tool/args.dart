@@ -3,20 +3,16 @@ class Args {
     final arg = arguments.join(' ');
 
     final reg = RegExp(
-      r'^ *(subsystem) *= *(GUI|Console) +(.+)$', caseSensitive: false,)
-        .allMatches(arg);
+      r'^ *(subsystem) *= *(GUI|Console) +(.+)$',
+      caseSensitive: false,
+    ).allMatches(arg);
 
-    if (reg.isEmpty) {
+    if (reg.isEmpty && reg.elementAt(0).groupCount != 3) {
       throw 'Arguments error. '
           'Example: subsystem = GUI d:\\file.exe';
     }
 
     final match = reg.elementAt(0);
-
-    if (match.groupCount != 3) {
-      throw 'Arguments error. '
-          'Example: subsystem = GUI d:\\file.exe';
-    }
 
     final flagName = (match.group(1) ?? '').toLowerCase();
     if (flagName != 'subsystem') {
