@@ -1,4 +1,5 @@
 # Hide console dart native
+The reason for creating this repository is described here: https://github.com/timsneath/win32/issues/127
 ## Install
 ```yaml
 dev_dependencies:
