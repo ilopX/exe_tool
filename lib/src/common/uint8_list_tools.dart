@@ -6,13 +6,6 @@ extension Uint8ListTools on Uint8List {
   }
 
   int toIn16Reversed() {
-    return Uint8List.fromList(reversed.toList()).toInt16();
-  }
-
-  int toInt16() {
-    if (buffer.lengthInBytes < 2) {
-      throw 'toInt16 error, minimum byte in buffer should be 2 and more ';
-    }
-    return buffer.asByteData().getUint16(0);
+    return buffer.asByteData().getUint16(0, Endian.little);
   }
 }
