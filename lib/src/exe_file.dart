@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:dart_exe/src/common/io_file.dart';
+
 import 'common/address_book.dart';
 import 'common/io.dart';
 import 'essential/win_pe.dart';
@@ -27,9 +29,9 @@ class ExeFile {
       throw 'File not found: $f';
     }
 
-    RandomAccessFile file;
+    final file = IOFile();
     try {
-      file = f.openSync(mode: FileMode.append);
+      file.openSync(f);
     } catch (e) {
       final fileException = (e as FileSystemException);
       final osError = fileException.osError?.message ?? '';

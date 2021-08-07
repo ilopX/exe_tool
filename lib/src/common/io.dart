@@ -1,8 +1,8 @@
-import 'dart:io';
+import 'io_file.dart';
 import 'io_tools.dart';
 
 class IO {
-  final RandomAccessFile _file;
+  final IOFile _file;
   final int _fileSize;
 
   IO(this._file) : _fileSize = _file.lengthSync();
