@@ -1,16 +1,16 @@
 import '../common/address_book.dart';
-import '../common/io_image.dart';
+import '../common/io.dart';
 import '../flags/machine_type.dart';
 import '../flags/pe_type.dart';
 import '../flags/subsystem.dart';
 
 class WinPE {
   final AddressBook address;
-  final IOImage _io;
+  final IO _io;
 
   WinPE.open({
     required AddressBook addressBook,
-    required IOImage read_write,
+    required IO read_write,
   })  : address = addressBook,
         _io = read_write;
 

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'common/address_book.dart';
-import 'common/io_image.dart';
+import 'common/io.dart';
 import 'essential/win_pe.dart';
 
 class ExeFile {
@@ -10,7 +10,7 @@ class ExeFile {
   ExeFile(this.fileName);
 
   late AddressBook _address;
-  late IOImage _io;
+  late IO _io;
   bool _isFileOpen = false;
 
   WinPE openPE() {
@@ -21,7 +21,7 @@ class ExeFile {
     return WinPE.open(addressBook: _address, read_write: _io);
   }
 
-  IOImage _openFile() {
+  IO _openFile() {
     final f = File(fileName);
     if (!f.existsSync()) {
       throw 'File not found: $f';
@@ -37,7 +37,7 @@ class ExeFile {
     }
 
     _isFileOpen = true;
-    return IOImage(file);
+    return IO(file);
   }
 
   AddressBook _calculateAddress() {
