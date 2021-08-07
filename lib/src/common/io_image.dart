@@ -30,6 +30,10 @@ class IOImage {
     return _file.readSync(len).toStringChar();
   }
 
+  void close() {
+    _file.closeSync();
+  }
+
   void _checkFileSize(int fileSize) {
     if (_fileSize < fileSize) {
       throw 'File ${_file.path} is not an executable file. '

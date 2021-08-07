@@ -43,8 +43,4 @@ class Args {
 
   bool _isShowInfo = false;
   bool get isShowInfo => _isShowInfo;
-
-
-
-
 }

@@ -19,12 +19,14 @@ abstract class Flags {
         return item;
       }
     }
-    throw 'flag not found';
+    throw '${T.runtimeType} flag(0x${flag.toRadixString(16)}) not found.'
+        '\nSupported flags: $all';
   }
 
   static T fromString<T extends Flags> (String text, List<T> all) {
+    final lowText = text.toLowerCase();
     return all.firstWhere(
-            (i) => i.title.toLowerCase() == text.toLowerCase()
+            (i) => i.title.toLowerCase() == lowText
     );
   }
 }
