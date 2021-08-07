@@ -14,6 +14,15 @@ dart compile exe app.dart
 pub run dart_exe subsystem=gui showInfo d:\app.exe
 ```
 
+### Output:
+```
+ExeFile: d:\downloads\function.exe + changed(GUI)
+0x3c: PE address: 0x118
+0x11c: MachineType: 0x8664 (x64)
+0x130: PEType: 0x20b (PE+)
+0x174: Subsystem: 0x2 (GUI)
+```
+
 ## Example
 ```dart
 import 'dart:io';
@@ -25,14 +34,14 @@ void main(List<String> arguments) async {
   try {
     final pe = exe.openPE();
 
+    pe.subsystem = Subsystem.GUI;
+
     print('Open: ${exe.fileName}');
     print('PE address: 0x${pe.address.pe.toRadixString(16)}');
     print('${pe.machine}');
     print('${pe.peType}');
+
     print('${pe.subsystem}');
-
-    pe.subsystem = Subsystem.GUI;
-
   } catch (e) {
     stderr.writeln(e);
   }
@@ -42,11 +51,4 @@ void main(List<String> arguments) async {
 }
 ```
 
-### Output:
-```
-ExeFile: d:\downloads\function.exe + changed(GUI)
-0x3c: PE address: 0x118
-0x11c: MachineType: 0x8664 (x64)
-0x130: PEType: 0x20b (PE+)
-0x174: Subsystem: 0x2 (GUI)
-```
+

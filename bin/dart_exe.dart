@@ -3,17 +3,17 @@ import 'dart:io';
 import 'package:dart_exe/bin_dart_exe.dart';
 
 void main(List<String> arguments) async {
-  final args = parseArgs(arguments);
-  final exe = ExeFile(args.fileName);
+  final cmdArgs = parseArgs(arguments);
+  final exe = ExeFile(cmdArgs.fileName);
   try {
     final pe = exe.openPE();
-    final isSubsystemChanged = changeSubsystem(args, pe);
+    final isSubsystemChanged = changeSubsystem(cmdArgs, pe);
 
     print('ExeFile: ${exe.fileName} '
         '${isSubsystemChanged ? greenText('+ changed') : ''}'
         '(${pe.subsystem.title})');
 
-    if (args.isShowInfo) {
+    if (cmdArgs.isShowInfo) {
       printExeInfo(exe.fileName, pe, isSubsystemChanged);
     }
   } catch (e) {
@@ -33,9 +33,9 @@ Args parseArgs(List<String> arguments) {
   }
 }
 
-bool changeSubsystem(Args args, WinPE pe) {
-  if (args.isSubsystem) {
-    final newSubsystem = Subsystem.fromString(args.subsystem);
+bool changeSubsystem(Args cmdArgs, WinPE pe) {
+  if (cmdArgs.isSubsystem) {
+    final newSubsystem = Subsystem.fromString(cmdArgs.subsystem);
     if (pe.subsystem != newSubsystem) {
       pe.subsystem = newSubsystem;
       return true;
