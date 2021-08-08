@@ -8,8 +8,6 @@ build/
 CHANGELOG.md
 pubspec.lock
 
-test/
-
 .idea/
 
 tmp/
