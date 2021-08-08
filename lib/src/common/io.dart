@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:dart_exe/src/errors/app_error.dart';
+import 'package:dart_exe/src/exceptions/app_error.dart';
 import 'package:meta/meta.dart';
 
 import 'io_file.dart';

@@ -1,4 +1,4 @@
-import 'package:dart_exe/src/errors/app_error.dart';
+import 'package:dart_exe/src/exceptions/app_error.dart';
 import 'package:test/test.dart';
 
 import '../mocks/impl_flags.dart';
