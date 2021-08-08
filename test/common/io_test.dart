@@ -10,7 +10,7 @@ import '../mocks/all.mocks.dart';
 import '../sugar_testo.dart';
 
 void main() {
-  'checkFileSize'.group(() {
+  'checkFileSize(int size)'.group(() {
     late IO io;
 
     'size larger than available -> throw'.testThrow(() {
@@ -18,7 +18,7 @@ void main() {
       io.checkFileSize(15);
     }, isA<AppException>());
 
-    'size in the range of available -> ок'.test(() {
+    'size range of available -> ок'.test(() {
       // ignore: invalid_use_of_protected_member
       io.checkFileSize(10);
     });
@@ -33,14 +33,9 @@ void main() {
 
   });
 
-  'rw'.group(() {
+  'write(int int16Value)'.group(() {
     late IO io;
     late MockIOFile fakeFile;
-
-    'read two bytes -> int16 reversed value'.test(() {
-      final bytes = io.read(address: 0);
-      expect(bytes, [0x2a, 0x1a].toInt16());
-    });
 
     'write int16[0xa, 0xb] -> byteList[0xb, 0xa] reverse'.test(() {
       final write = [0xa, 0xb].toInt16();
@@ -52,6 +47,23 @@ void main() {
       );
 
       verify(fakeFile.writeFromSync(shouldWrite)).called(1);
+    });
+
+    setUp(() {
+      fakeFile = MockIOFile();
+      when(fakeFile.lengthSync()).thenReturn(2);
+      io = IO(fakeFile);
+    });
+
+  });
+
+  'read(int address)'.group(() {
+    late IO io;
+    late MockIOFile fakeFile;
+
+    'address any -> int16 reversed value'.test(() {
+      final bytes = io.read(address: 0);
+      expect(bytes, [0x2a, 0x1a].toInt16());
     });
 
     setUp(() {

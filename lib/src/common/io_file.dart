@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'dart:typed_data';
 
+/// This is the duplicate functionality of the RandomAccessFile class.
+/// Reason: To simplify the creation of mocks in tests
 class IOFile {
   late RandomAccessFile _file;
 

@@ -25,7 +25,7 @@ extension StringTestTools on String {
   }
 
   void testThrow<T>(Function() func, native_test.TypeMatcher<T> throwClass) {
-    native_test.test(toPrintable(), () {
+    native_test.test(toPrintable() + ' 🔥', () {
       native_test.expect(
           () => func(),
           native_test.throwsA(throwClass)
@@ -34,6 +34,6 @@ extension StringTestTools on String {
   }
 
   String toPrintable() {
-    return replaceAll('->', '➡️');
+    return replaceAll('->', ' ↩️️ ');
   }
 }

@@ -35,7 +35,7 @@ void main() {
       expect(result, Flags.three);
     });
 
-    'title not exist :"_fake_" -> throw'.testThrow(() {
+    'title not exist : "_fake_" -> throw'.testThrow(() {
       Flags.fromString('_fake_');
     }, isA<AppException>());
 

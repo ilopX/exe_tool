@@ -48,7 +48,6 @@ class IO {
 
 typedef Bytes = Uint8List;
 
-
 extension Uint8ListTools on Bytes {
   String toStringChar() {
     return map((i) => String.fromCharCode(i)).join();
@@ -59,7 +58,6 @@ extension Uint8ListTools on Bytes {
   }
 }
 
-
 extension IOInt on int {
   Bytes toBytes() {
     final bData = ByteData(2)
@@ -67,4 +65,3 @@ extension IOInt on int {
     return bData.buffer.asUint8List();
   }
 }
-
