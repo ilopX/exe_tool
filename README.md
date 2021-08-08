@@ -16,7 +16,7 @@ pub run dart_exe subsystem=gui showInfo d:\app.exe
 
 ### Output:
 ```
-ExeFile: d:\downloads\function.exe + changed(GUI)
+ExeFile: d:\app.exe + changed(GUI)
 0x3c: PE address: 0x118
 0x11c: MachineType: 0x8664 (x64)
 0x130: PEType: 0x20b (PE+)
