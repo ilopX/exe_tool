@@ -11,3 +11,5 @@ pubspec.lock
 test/
 
 .idea/
+
+tmp/

@@ -7,6 +7,9 @@ environment:
   sdk: '>=2.13.0 <3.0.0'
 
 dependencies:
+  build_runner: ^2.1.0
+  meta: ^1.7.0
+  mockito: ^5.0.14
   path: ^1.7.0
 
 dev_dependencies:

@@ -12,3 +12,13 @@ abstract class AppError extends Error {
 
   static String normalizeMessage(String msg) => msg.replaceAll('        ', '');
 }
+
+class AppException {
+  final String message;
+  AppException(this.message);
+
+  @override
+  String toString() {
+    return message;
+  }
+}

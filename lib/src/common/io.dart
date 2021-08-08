@@ -1,5 +1,9 @@
+import 'dart:typed_data';
+
+import 'package:dart_exe/src/errors/app_error.dart';
+import 'package:meta/meta.dart';
+
 import 'io_file.dart';
-import 'io_tools.dart';
 
 class IO {
   final IOFile _file;
@@ -8,21 +12,21 @@ class IO {
   IO(this._file) : _fileSize = _file.lengthSync();
 
   int read({required int address}) {
-    _checkFileSize(address + 2);
+    checkFileSize(address + 2);
 
     _file.setPositionSync(address);
     return _file.readSync(2).toIn16Reversed();
   }
 
   void write({required int address, required int int16Value}) {
-    _checkFileSize(address + 2);
+    checkFileSize(address + 2);
 
     _file.setPositionSync(address);
     _file.writeFromSync(int16Value.toBytes());
   }
 
   String readString({required int address, required int len}) {
-    _checkFileSize(address + len);
+    checkFileSize(address + len);
 
     _file.setPositionSync(address);
     return _file.readSync(len).toStringChar();
@@ -32,10 +36,35 @@ class IO {
     _file.closeSync();
   }
 
-  void _checkFileSize(int fileSize) {
-    if (_fileSize < fileSize) {
-      throw 'File ${_file.path} is not an executable file. '
-          '\nCheck file size($_fileSize byte). ';
+  @protected
+  void checkFileSize(int requestSize) {
+    if (_fileSize < requestSize) {
+      throw AppException('File ${_file.path} is not an executable file. '
+          '\nCheck file size($_fileSize bytes), '
+          'request size($requestSize bytes).');
     }
   }
 }
+
+typedef Bytes = Uint8List;
+
+
+extension Uint8ListTools on Bytes {
+  String toStringChar() {
+    return map((i) => String.fromCharCode(i)).join();
+  }
+
+  int toIn16Reversed() {
+    return buffer.asByteData().getUint16(0, Endian.little);
+  }
+}
+
+
+extension IOInt on int {
+  Bytes toBytes() {
+    final bData = ByteData(2)
+      ..setInt16(0, this, Endian.little);
+    return bData.buffer.asUint8List();
+  }
+}
+
