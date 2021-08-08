@@ -6,20 +6,12 @@ import 'package:dart_exe/src/errors/app_error.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import '../mocks.g/all.mocks.dart';
+import '../mocks/all.mocks.dart';
 import '../sugar_testo.dart';
 
 void main() {
   'checkFileSize'.group(() {
     late IO io;
-
-    setUp(() {
-      final fakeFile = MockIOFile();
-      when(fakeFile.lengthSync()).thenReturn(10);
-      when(fakeFile.path).thenReturn('');
-
-      io = IO(fakeFile);
-    });
 
     'size larger than available -> throw'.testThrow(() {
       // ignore: invalid_use_of_protected_member
@@ -30,25 +22,27 @@ void main() {
       // ignore: invalid_use_of_protected_member
       io.checkFileSize(10);
     });
+
+    setUp(() {
+      final fakeFile = MockIOFile();
+      when(fakeFile.lengthSync()).thenReturn(10);
+      when(fakeFile.path).thenReturn('');
+
+      io = IO(fakeFile);
+    });
+
   });
 
   'rw'.group(() {
     late IO io;
     late MockIOFile fakeFile;
-    setUp(() {
-      fakeFile = MockIOFile();
-      when(fakeFile.lengthSync()).thenReturn(2);
-      when(fakeFile.readSync(any)).thenReturn(Uint8List.fromList([0x1a, 0x2a]));
-
-      io = IO(fakeFile);
-    });
 
     'read two bytes -> int16 reversed value'.test(() {
       final bytes = io.read(address: 0);
       expect(bytes, [0x2a, 0x1a].toInt16());
     });
 
-    'write int16[0xa, 0xb] ➡️ byteList[0xb, 0xa] reverse'.test(() {
+    'write int16[0xa, 0xb] -> byteList[0xb, 0xa] reverse'.test(() {
       final write = [0xa, 0xb].toInt16();
       final shouldWrite = [0xb, 0xa].toByteList();
 
@@ -59,21 +53,21 @@ void main() {
 
       verify(fakeFile.writeFromSync(shouldWrite)).called(1);
     });
+
+    setUp(() {
+      fakeFile = MockIOFile();
+      when(fakeFile.lengthSync()).thenReturn(2);
+      when(fakeFile.readSync(any)).thenReturn(Uint8List.fromList([0x1a, 0x2a]));
+
+      io = IO(fakeFile);
+    });
+
   });
 
   'readString'.group(() {
     late IO io;
     late MockIOFile fakeFile;
     final string = 'dart';
-    setUp(() {
-      fakeFile = MockIOFile();
-      when(fakeFile.lengthSync()).thenReturn(string.length);
-      when(fakeFile.readSync(any)).thenReturn(string.codeUnits.toByteList());
-      when(fakeFile.readSync(0)).thenReturn(<int>[].toByteList());
-      when(fakeFile.path).thenReturn('');
-
-      io = IO(fakeFile);
-    });
 
     'read buffer${string.toHexList()} -> "$string"'.test(() {
       final strRead = io.readString(
@@ -97,6 +91,17 @@ void main() {
       );
       expect(strRead, '');
     });
+
+    setUp(() {
+      fakeFile = MockIOFile();
+      when(fakeFile.lengthSync()).thenReturn(string.length);
+      when(fakeFile.readSync(any)).thenReturn(string.codeUnits.toByteList());
+      when(fakeFile.readSync(0)).thenReturn(<int>[].toByteList());
+      when(fakeFile.path).thenReturn('');
+
+      io = IO(fakeFile);
+    });
+
   });
 }
 
@@ -120,4 +125,3 @@ extension ListTools on List<int> {
     return Uint8List.fromList(this);
   }
 }
-
