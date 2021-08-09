@@ -6,7 +6,7 @@ abstract class AbstractError extends Error {
   static final isDebug = Platform.environment['dart_debug'] == 'true';
 
   @override
-  String toString() => normalizeMessage(message) + getStackTraceIfDebug;
+  String toString() => normalizeMessage(message) + '\n' + getStackTraceIfDebug;
 
   String get getStackTraceIfDebug => isDebug ? '\n$stackTrace' : '';
 

@@ -1,8 +1,8 @@
 import 'package:dart_exe/src/exceptions/flag_converter_exception.dart';
 import 'package:test/test.dart';
 
-import '../mocks/impl_flags.dart';
-import '../sugar_testo.dart';
+import '../../mocks/impl_flags.dart';
+import '../../sugar_testo.dart';
 
 void main() {
   'fromFlag(int flag)'.group(() {

@@ -6,8 +6,8 @@ import 'package:dart_exe/src/exceptions/file_not_executable_exception.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import '../mocks/all.mocks.dart';
-import '../sugar_testo.dart';
+import '../../mocks/all.mocks.dart';
+import '../../sugar_testo.dart';
 
 void main() {
   'checkFileSize(int size)'.group(() {

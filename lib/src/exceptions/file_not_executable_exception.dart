@@ -23,7 +23,7 @@ abstract class FileNotExecutableException extends AbstractError {
 
   @override
   String get message {
-    return 'File $fileName is not executable.\n'
+    return 'File $fileName is not executable.'
         '$reasonMessage';
   }
 

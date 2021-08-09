@@ -17,7 +17,7 @@ class FlagConverterException<T> extends AbstractError {
   String get message {
     return  '$className flag converter(${requestValue.runtimeType}) error.\n'
         '\tRequested value: $requestValue\n'
-        '\tSupported values: $supportedValues\n';
+        '\tSupported values: $supportedValues';
   }
 
   List get supportedValues {
