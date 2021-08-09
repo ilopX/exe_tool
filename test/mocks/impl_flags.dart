@@ -4,11 +4,13 @@ class Flags extends src.Flags {
   static const one = Flags._internal(0x1, 'one');
   static const two = Flags._internal(0x2, 'two');
   static const three = Flags._internal(0x3, 'three');
+  static const four = Flags._internal(0x4, 'fOuR');
 
   static final all = List<Flags>.unmodifiable([
     one,
     two,
     three,
+    four,
   ]);
 
   static Flags fromFlag(int flag) => src.Flags.fromFlag(flag, all);

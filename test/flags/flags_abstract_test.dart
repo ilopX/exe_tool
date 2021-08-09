@@ -25,14 +25,19 @@ void main() {
 
   'fromString(String title)'.group(() {
 
-    'title: "one" -> 1'.test(() {
+    'title: "one" -> Flags.one'.test(() {
       final result = Flags.fromString('one');
       expect(result, Flags.one);
     });
 
-    'title case insensitive: "ThReE" -> 3'.test(() {
+    'title case insensitive: "ThReE" -> Flags.three'.test(() {
       final result = Flags.fromString('ThReE');
       expect(result, Flags.three);
+    });
+
+    'title: "four" -> Flags.four where title different case "fOuR"' .test(() {
+      final result = Flags.fromString('four');
+      expect(result, Flags.four);
     });
 
     'title not exist : "_fake_" -> throw'.testThrow(() {

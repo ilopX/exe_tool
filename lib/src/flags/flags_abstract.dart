@@ -20,12 +20,14 @@ abstract class Flags {
 
   static T fromString<T extends Flags> (String title, List<T> all) {
     final titleLowCase = title.toLowerCase();
-    return all.firstWhere(
-            (i) => i.title.toLowerCase() == titleLowCase,
-      orElse: () => throw AppException('${T.runtimeType} '
-          'flagTile("title") not found.'
-          '\nSupported flags: $all')
-    );
+    for(final item in all) {
+      if (item.title.toLowerCase() == titleLowCase) {
+        return item;
+      }
+    }
+    throw AppException('${T.runtimeType} '
+            'flagTitle("$title") not found.'
+            '\nSupported flags: $all');
   }
 
   @override
