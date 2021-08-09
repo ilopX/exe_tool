@@ -1,4 +1,6 @@
 # Hide console dart native
+Makes a non-console Windows application out of an executable file. By patching method
+
 The reason for creating this repository is described here: https://github.com/timsneath/win32/issues/127
 ## Install
 ```yaml
