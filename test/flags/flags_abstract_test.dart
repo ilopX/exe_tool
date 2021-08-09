@@ -1,4 +1,4 @@
-import 'package:dart_exe/src/exceptions/error_abstract.dart';
+import 'package:dart_exe/src/exceptions/flag_converter_exception.dart';
 import 'package:test/test.dart';
 
 import '../mocks/impl_flags.dart';
@@ -19,7 +19,7 @@ void main() {
 
     'flag not exist: 99 -> throw'.testThrow(() {
       Flags.fromFlag(99);
-    }, isA<AppException>());
+    }, isA<FlagConverterException>());
 
   });
 
@@ -42,7 +42,7 @@ void main() {
 
     'title not exist : "_fake_" -> throw'.testThrow(() {
       Flags.fromString('_fake_');
-    }, isA<AppException>());
+    }, isA<FlagConverterException>());
 
   });
 }

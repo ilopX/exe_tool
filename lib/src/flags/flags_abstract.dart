@@ -1,5 +1,5 @@
-import 'package:dart_exe/src/common/console_colors.dart';
-import 'package:dart_exe/src/exceptions/error_abstract.dart';
+import '../common/console_colors.dart';
+import '../exceptions/flag_converter_exception.dart';
 
 abstract class Flags {
   final int flag;
@@ -13,9 +13,7 @@ abstract class Flags {
         return item;
       }
     }
-    throw AppException('${T.runtimeType} '
-        'flag(0x${flag.toRadixString(16)}) not found.'
-        '\nSupported flags: $all');
+    throw FlagConverterException(T, flag, all);
   }
 
   static T fromString<T extends Flags> (String title, List<T> all) {
@@ -25,9 +23,7 @@ abstract class Flags {
         return item;
       }
     }
-    throw AppException('${T.runtimeType} '
-            'flagTitle("$title") not found.'
-            '\nSupported flags: $all');
+    throw FlagConverterException(T, title, all);
   }
 
   @override
