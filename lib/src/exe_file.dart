@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:dart_exe/src/common/io_file.dart';
-
+import 'common/io_file.dart';
 import 'common/address_book.dart';
 import 'common/io.dart';
 import 'essential/win_pe.dart';
+import 'exceptions/file_not_executable_exception.dart';
 
 class ExeFile {
   final String fileName;
@@ -53,7 +53,11 @@ class ExeFile {
 
     final _0 = String.fromCharCode(0);
     if (mzSignature != 'MZ' && peSignature != 'PE$_0$_0') {
-      throw 'File $fileName is not an executable file';
+      throw FileNotExecutableException.notVerified(
+          fileName,
+          peSignature,
+          mzSignature,
+      );
     }
   }
 

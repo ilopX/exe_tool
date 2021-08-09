@@ -1,6 +1,6 @@
 import 'dart:io';
 
-abstract class AppError extends Error {
+abstract class AbstractError extends Error {
   String get message;
 
   static final isDebug = Platform.environment['dart_debug'] == 'true';
@@ -15,6 +15,7 @@ abstract class AppError extends Error {
 
 class AppException {
   final String message;
+
   AppException(this.message);
 
   @override

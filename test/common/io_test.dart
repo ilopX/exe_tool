@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:dart_exe/src/common/io.dart';
-import 'package:dart_exe/src/exceptions/app_error.dart';
+import 'package:dart_exe/src/exceptions/file_not_executable_exception.dart';
 
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
@@ -16,7 +16,7 @@ void main() {
     'size larger than available -> throw'.testThrow(() {
       // ignore: invalid_use_of_protected_member
       io.checkFileSize(15);
-    }, isA<AppException>());
+    }, isA<UnavailableSize>());
 
     'size range of available -> ок'.test(() {
       // ignore: invalid_use_of_protected_member
@@ -94,7 +94,7 @@ void main() {
         address: 0,
         len: string.length * 2,
       );
-    }, isA<AppException>());
+    }, isA<UnavailableSize>());
 
     'read 0 len string -> "" empty string'.test(() {
       final strRead = io.readString(

@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
-import 'package:dart_exe/src/exceptions/app_error.dart';
 import 'package:meta/meta.dart';
 
+import '../exceptions/file_not_executable_exception.dart';
 import 'io_file.dart';
 
 class IO {
@@ -39,9 +39,11 @@ class IO {
   @protected
   void checkFileSize(int requestSize) {
     if (_fileSize < requestSize) {
-      throw AppException('File ${_file.path} is not an executable file. '
-          '\nCheck file size($_fileSize bytes), '
-          'request size($requestSize bytes).');
+      throw FileNotExecutableException.unavailableSize(
+          _file.path,
+          _fileSize,
+          requestSize,
+      );
     }
   }
 }

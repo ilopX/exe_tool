@@ -1,5 +1,5 @@
 import 'package:dart_exe/src/common/console_colors.dart';
-import 'package:dart_exe/src/exceptions/app_error.dart';
+import 'package:dart_exe/src/exceptions/error_abstract.dart';
 
 abstract class Flags {
   final int flag;
