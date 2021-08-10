@@ -14,7 +14,7 @@ class FlagConverterException<T, F extends Flags> extends AbstractError {
   @override
   String get message {
     return '$F flag converter(${requestValue.runtimeType}) error.\n'
-        '\tRequested value: $requestValue\n'
+        '\tRequested value: $requestValueStr\n'
         '\tSupported values: $supportedValues';
   }
 
@@ -31,5 +31,12 @@ class FlagConverterException<T, F extends Flags> extends AbstractError {
       default:
         return availableFlags;
     }
+  }
+
+  String get requestValueStr {
+    if (requestValue is int) {
+      return '0x' + (requestValue as int).toRadixString(16);
+    }
+    return requestValue.toString();
   }
 }
