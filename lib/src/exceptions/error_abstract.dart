@@ -3,23 +3,10 @@ import 'dart:io';
 abstract class AbstractError extends Error {
   String get message;
 
+  @override
+  String toString() =>
+      message + '\n' +
+      (isDebug ? '\n$stackTrace' : '');
+
   static final isDebug = Platform.environment['dart_debug'] == 'true';
-
-  @override
-  String toString() => normalizeMessage(message) + '\n' + getStackTraceIfDebug;
-
-  String get getStackTraceIfDebug => isDebug ? '\n$stackTrace' : '';
-
-  static String normalizeMessage(String msg) => msg.replaceAll('        ', '');
-}
-
-class AppException {
-  final String message;
-
-  AppException(this.message);
-
-  @override
-  String toString() {
-    return message;
-  }
 }
