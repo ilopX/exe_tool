@@ -8,8 +8,11 @@ import 'package:test/test.dart';
 import '../mocks/all.mocks.dart';
 import '../sugar_testo.dart';
 
+// ignore_for_file: invalid_use_of_protected_member
+
 void main() {
-  'close()'.group(() {
+  'openFile() -> close()'.group(() {
+    late String existingFileName;
 
     'constructor -> file is close'.test(() {
       final exe = ExeFile('');
@@ -17,29 +20,21 @@ void main() {
     });
 
     'open real file -> file is open'.test(() {
-      final existingFileName = Directory.systemTemp.createTempSync();
-      File(existingFileName.path + 'empty_file').createSync();
 
       final io = MockIO();
-      final exe = ExeFile.fromIO(io, existingFileName.path + 'empty_file');
+      final exe = ExeFile.fromIO(io, existingFileName);
 
-      // ignore: invalid_use_of_protected_member
       final ioFile = exe.openFile();
 
       expect(exe.isFileOpen, true);
 
       ioFile.closeSync();
-      existingFileName.deleteSync();
     });
 
     'open real file + close -> file is close'.test(() {
-      final existingFileName = Directory.systemTemp.createTempSync();
-      File(existingFileName.path + 'empty_file').createSync();
-
       final io = MockIO();
-      final exe = ExeFile.fromIO(io, existingFileName.path + 'empty_file');
+      final exe = ExeFile.fromIO(io, existingFileName);
 
-      // ignore: invalid_use_of_protected_member
       final ioFile = exe.openFile();
       exe.close();
 
@@ -47,68 +42,73 @@ void main() {
       verify(io.close()).called(1);
 
       ioFile.closeSync();
-      existingFileName.deleteSync();
     });
 
+
+    late Directory tmpDir;
+
+    setUp(() {
+      tmpDir = Directory.systemTemp.createTempSync();
+      existingFileName = tmpDir.path + 'empty_file';
+      File(existingFileName).createSync();
+    });
+
+    tearDown(() {
+      tmpDir.deleteSync();
+    });
   });
 
   'verifyExeFile()'.group(() {
+    final _0 = String.fromCharCode(0);
+    late MockAddressBook addressBook;
+    late MockIO io;
+    late ExeFile exe;
 
     'normal exe -> ok'.test(() {
-      final addressBook = MockAddressBook();
-      final io = MockIO();
-      final _0 = String.fromCharCode(0);
-
-      when(addressBook.pe).thenReturn(2);
       when(io.readString(address: 0, len: 2)).thenReturn('MZ');
       when(io.readString(address: 2, len: 4)).thenReturn('PE$_0$_0');
 
-      final exe = ExeFile.withoutFile(io, addressBook);
-      // ignore: invalid_use_of_protected_member
       exe.verifyExeFile();
     });
 
     'pe signature false -> throw'.testThrow(() {
-      final addressBook = MockAddressBook();
-      final io = MockIO();
-
-      when(addressBook.pe).thenReturn(2);
       when(io.readString(address: 0, len: 2)).thenReturn('MZ');
       when(io.readString(address: 2, len: 4)).thenReturn('_fake_');
 
-      final exe = ExeFile.withoutFile(io, addressBook);
-      // ignore: invalid_use_of_protected_member
       exe.verifyExeFile();
     }, isA<NotVerified>());
 
     'mz signature false -> throw'.testThrow(() {
-      final _0 = String.fromCharCode(0);
-      final addressBook = MockAddressBook();
-      final io = MockIO();
-
-      when(addressBook.pe).thenReturn(2);
       when(io.readString(address: 0, len: 2)).thenReturn('_fake_');
       when(io.readString(address: 2, len: 4)).thenReturn('PE$_0$_0');
 
-      final exe = ExeFile.withoutFile(io, addressBook);
-      // ignore: invalid_use_of_protected_member
       exe.verifyExeFile();
     }, isA<NotVerified>());
 
+    setUp(() {
+      addressBook = MockAddressBook();
+      io = MockIO();
+      exe = ExeFile.withoutFile(io, addressBook);
+      when(addressBook.pe).thenReturn(2);
+    });
   });
 
   'calculateAddress()'.group(() {
+    late MockIO io;
+    late ExeFile exe;
 
     'read -> AddressBook'.test(() {
-      final io = MockIO();
       when(io.read(address: 0x3c)).thenReturn(0xABC);
 
-      final exe = ExeFile.fromIO(io);
-      // ignore: invalid_use_of_protected_member
       final result = exe.calculateAddress();
+
       expect(result.pe, 0xABC);
     });
 
+    setUp(() {
+      io = MockIO();
+      exe = ExeFile.fromIO(io);
+    });
   });
 
   // '_openFile()'.group(() {
