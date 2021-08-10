@@ -1,20 +1,5 @@
 import 'package:test/test.dart' as native_test;
 
-class Exception {
-
-}
-
-void main() {
-  'Group name one'.group(() {
-    'test one -> all good'.test(() {
-      print('all good');
-    });
-    'test -> throw'.testThrow(() {
-      throw Exception();
-    }, native_test.isA<Exception>());
-  });
-}
-
 extension StringTestTools on String {
   void group(Function() func) {
     native_test.group(toPrintable(), func);

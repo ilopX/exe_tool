@@ -11,14 +11,12 @@ import '../sugar_testo.dart';
 void main() {
   'close()'.group(() {
 
-    'Constructor -> file is close'.test(() {
-      final io = MockIO();
-      final exe = ExeFile.fromIO(io);
+    'constructor -> file is close'.test(() {
+      final exe = ExeFile('');
       expect(exe.isFileOpen, false);
-      verifyNever(io.close());
     });
 
-    'open file -> file is open'.test(() {
+    'open real file -> file is open'.test(() {
       final existingFileName = Directory.systemTemp.createTempSync();
       File(existingFileName.path + 'empty_file').createSync();
 
@@ -34,7 +32,7 @@ void main() {
       existingFileName.deleteSync();
     });
 
-    'open file + close -> file is close'.test(() {
+    'open real file + close -> file is close'.test(() {
       final existingFileName = Directory.systemTemp.createTempSync();
       File(existingFileName.path + 'empty_file').createSync();
 
@@ -58,8 +56,8 @@ void main() {
 
     'normal exe -> ok'.test(() {
       final addressBook = MockAddressBook();
-      final _0 = String.fromCharCode(0);
       final io = MockIO();
+      final _0 = String.fromCharCode(0);
 
       when(addressBook.pe).thenReturn(2);
       when(io.readString(address: 0, len: 2)).thenReturn('MZ');
@@ -101,7 +99,7 @@ void main() {
 
   'calculateAddress()'.group(() {
 
-    ' -> AddressBook'.test(() {
+    'read -> AddressBook'.test(() {
       final io = MockIO();
       when(io.read(address: 0x3c)).thenReturn(0xABC);
 
@@ -112,7 +110,6 @@ void main() {
     });
 
   });
-
 
   // '_openFile()'.group(() {
   //
