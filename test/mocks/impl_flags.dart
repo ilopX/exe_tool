@@ -1,21 +1,21 @@
-import 'package:dart_exe/src/flags/flags_abstract.dart' as src;
+import 'package:dart_exe/src/flags/flags_abstract.dart';
 
-class Flags extends src.Flags {
-  static const one = Flags._internal(0x1, 'one');
-  static const two = Flags._internal(0x2, 'two');
-  static const three = Flags._internal(0x3, 'three');
-  static const four = Flags._internal(0x4, 'fOuR');
+class ImplFlags extends Flags {
+  static const one = ImplFlags._internal(0x1, 'one');
+  static const two = ImplFlags._internal(0x2, 'two');
+  static const three = ImplFlags._internal(0x3, 'three');
+  static const four = ImplFlags._internal(0x4, 'fOuR');
 
-  static final all = List<Flags>.unmodifiable([
+  static final all = List<ImplFlags>.unmodifiable([
     one,
     two,
     three,
     four,
   ]);
 
-  static Flags fromFlag(int flag) => src.Flags.fromFlag(flag, all);
+  static ImplFlags fromFlag(int flag) => Flags.fromFlag(flag, all);
 
-  static Flags fromString(String title) => src.Flags.fromString(title, all);
+  static ImplFlags fromString(String title) => Flags.fromString(title, all);
 
-  const Flags._internal(int flag, String title) : super(flag, title);
+  const ImplFlags._internal(int flag, String title) : super(flag, title);
 }

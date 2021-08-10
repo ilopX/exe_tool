@@ -7,23 +7,23 @@ abstract class Flags {
 
   const Flags(this.flag, this.title);
 
-  static T fromFlag<T extends Flags>(int flag, List<T> all) {
+  static F fromFlag<F extends Flags>(int flag, List<F> all) {
     for(final item in all) {
       if (item.flag == flag) {
         return item;
       }
     }
-    throw FlagConverterException(T, flag, all);
+    throw FlagConverterException(flag, all);
   }
 
-  static T fromString<T extends Flags> (String title, List<T> all) {
+  static F fromString<F extends Flags> (String title, List<F> all) {
     final titleLowCase = title.toLowerCase();
     for(final item in all) {
       if (item.title.toLowerCase() == titleLowCase) {
         return item;
       }
     }
-    throw FlagConverterException(T, title, all);
+    throw FlagConverterException(title, all);
   }
 
   @override

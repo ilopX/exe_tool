@@ -8,17 +8,17 @@ void main() {
   'fromFlag(int flag)'.group(() {
 
     'flag: 1 -> Flag.one'.test(() {
-      final result = Flags.fromFlag(1);
-      expect(result, Flags.one);
+      final result = ImplFlags.fromFlag(1);
+      expect(result, ImplFlags.one);
     });
 
     'flag: 3 -> Flag.three'.test(() {
-      final result = Flags.fromFlag(3);
-      expect(result, Flags.three);
+      final result = ImplFlags.fromFlag(3);
+      expect(result, ImplFlags.three);
     });
 
     'flag not exist: 99 -> throw'.testThrow(() {
-      Flags.fromFlag(99);
+      ImplFlags.fromFlag(99);
     }, isA<FlagConverterException>());
 
   });
@@ -26,22 +26,22 @@ void main() {
   'fromString(String title)'.group(() {
 
     'title: "one" -> Flags.one'.test(() {
-      final result = Flags.fromString('one');
-      expect(result, Flags.one);
+      final result = ImplFlags.fromString('one');
+      expect(result, ImplFlags.one);
     });
 
     'title case insensitive: "ThReE" -> Flags.three'.test(() {
-      final result = Flags.fromString('ThReE');
-      expect(result, Flags.three);
+      final result = ImplFlags.fromString('ThReE');
+      expect(result, ImplFlags.three);
     });
 
     'title: "four" -> Flags.four where title different case "fOuR"' .test(() {
-      final result = Flags.fromString('four');
-      expect(result, Flags.four);
+      final result = ImplFlags.fromString('four');
+      expect(result, ImplFlags.four);
     });
 
     'title not exist : "_fake_" -> throw'.testThrow(() {
-      Flags.fromString('_fake_');
+      ImplFlags.fromString('_fake_');
     }, isA<FlagConverterException>());
 
   });

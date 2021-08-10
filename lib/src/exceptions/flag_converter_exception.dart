@@ -2,20 +2,18 @@ import '../flags/flags_abstract.dart';
 
 import 'error_abstract.dart';
 
-class FlagConverterException<T> extends AbstractError {
-  final Type className;
+class FlagConverterException<T, F extends Flags> extends AbstractError {
   final T requestValue;
-  final List<Flags> availableFlags;
+  final List<F> availableFlags;
 
   FlagConverterException(
-      this.className,
       this.requestValue,
       this.availableFlags,
       );
 
   @override
   String get message {
-    return  '$className flag converter(${requestValue.runtimeType}) error.\n'
+    return '$F flag converter(${requestValue.runtimeType}) error.\n'
         '\tRequested value: $requestValue\n'
         '\tSupported values: $supportedValues';
   }
