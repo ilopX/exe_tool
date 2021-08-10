@@ -52,7 +52,7 @@ typedef Bytes = Uint8List;
 
 extension Uint8ListTools on Bytes {
   String toStringChar() {
-    return map((i) => String.fromCharCode(i)).join();
+    return String.fromCharCodes(this);
   }
 
   int toIn16Reversed() {
