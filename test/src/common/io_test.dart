@@ -9,17 +9,17 @@ import 'package:test/test.dart';
 import '../../mocks/all.mocks.dart';
 import '../../sugar_testo.dart';
 
+// ignore_for_file: invalid_use_of_protected_member
+
 void main() {
   'checkFileSize(int size)'.group(() {
     late IO io;
 
     'size larger than available -> throw'.testThrow(() {
-      // ignore: invalid_use_of_protected_member
       io.checkFileSize(15);
     }, isA<UnavailableSize>());
 
     'size range of available -> ок'.test(() {
-      // ignore: invalid_use_of_protected_member
       io.checkFileSize(10);
     });
 
