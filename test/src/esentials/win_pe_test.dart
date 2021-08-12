@@ -9,8 +9,8 @@ import '../../sugar_testo.dart';
 void main() {
   'open()'.group(() {
     late WinPE winPE;
-    final addressBook = MockAddressBook();
-    final io = MockIO();
+    late MockAddressBook addressBook;
+    late MockIO io;
 
     'get machine -> i386'.test(() {
       expect(winPE.machine, MachineType.i368);
@@ -27,12 +27,18 @@ void main() {
     'set subsystem -> ok'.test(() {
       winPE.subsystem = Subsystem.Console;
 
-      verify(io.write(
+      verify(
+        io.write(
           address: 2,
-          int16Value:  Subsystem.Console.flag)).called(1);
+          int16Value: Subsystem.Console.flag,
+        ),
+      ).called(1);
     });
 
-    setUpAll(() {
+    setUp(() {
+      addressBook = MockAddressBook();
+      io = MockIO();
+
       when(addressBook.machine).thenReturn(0);
       when(addressBook.peType).thenReturn(1);
       when(addressBook.subsystem).thenReturn(2);
