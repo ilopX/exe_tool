@@ -12,25 +12,27 @@ import '../../sugar_testo.dart';
 // ignore_for_file: invalid_use_of_protected_member
 
 void main() {
-  'checkFileSize(int size)'.group(() {
-    late IO io;
+  'protected'.group(() {
+    'checkFileSize(int size)'.group(() {
+      late IO io;
 
-    'size larger than available -> throw'.testThrow(() {
-      io.checkFileSize(15);
-    }, isA<UnavailableSize>());
+      'size larger than available -> throw'.testThrow(() {
+        io.checkFileSize(15);
+      }, isA<UnavailableSize>());
 
-    'size range of available -> ок'.test(() {
-      io.checkFileSize(10);
+      'size range of available -> ок'.test(() {
+        io.checkFileSize(10);
+      });
+
+      setUp(() {
+        final fakeFile = MockIOFile();
+        when(fakeFile.lengthSync()).thenReturn(10);
+        when(fakeFile.path).thenReturn('');
+
+        io = IO(fakeFile);
+      });
+
     });
-
-    setUp(() {
-      final fakeFile = MockIOFile();
-      when(fakeFile.lengthSync()).thenReturn(10);
-      when(fakeFile.path).thenReturn('');
-
-      io = IO(fakeFile);
-    });
-
   });
 
   'write(int int16Value)'.group(() {

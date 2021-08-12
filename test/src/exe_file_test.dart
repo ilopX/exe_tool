@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dart_exe/bin_dart_exe.dart';
@@ -15,7 +14,7 @@ import '../sugar_testo.dart';
 void main() {
   'protected method'.group(() {
     'openFile() -> close()'.group(() {
-      late String existingFileName;
+      late TemporaryFile temporary;
 
       'constructor -> file is close'.test(() {
         final exe = ExeFile('');
@@ -24,7 +23,7 @@ void main() {
 
       'open real file -> file is open'.test(() {
         final io = MockIO();
-        final exe = ExeFile.fromIO(io, existingFileName);
+        final exe = ExeFile.fromIO(io, temporary.file.path);
 
         final ioFile = exe.openFile();
 
@@ -35,7 +34,7 @@ void main() {
 
       'open real file + close -> file is close'.test(() {
         final io = MockIO();
-        final exe = ExeFile.fromIO(io, existingFileName);
+        final exe = ExeFile.fromIO(io, temporary.file.path);
 
         final ioFile = exe.openFile();
         exe.close();
@@ -46,17 +45,12 @@ void main() {
         ioFile.closeSync();
       });
 
-
-      late Directory tmpDir;
-
       setUp(() {
-        tmpDir = Directory.systemTemp.createTempSync();
-        existingFileName = tmpDir.path + 'empty_file';
-        File(existingFileName).createSync();
+        temporary = TemporaryFile();
       });
 
       tearDown(() {
-        tmpDir.deleteSync();
+        temporary.close();
       });
     });
 
@@ -114,26 +108,23 @@ void main() {
     });
   });
 
-  'integrated: openPE()'.group(() {
-    late String fakeExeFileName;
+  'openPE()'.group(() {
+    late TemporaryFile temporary;
 
     'open real fake exe file -> ok'.test(() {
-      final exe = ExeFile(fakeExeFileName);
+      final exe = ExeFile(temporary.file.path);
       exe.openPE();
       exe.close();
     });
 
-    late Directory tmpDir;
-
     setUp(() {
-      tmpDir = Directory.systemTemp.createTempSync();
-      fakeExeFileName = tmpDir.path + 'fake._exe';
+      temporary = TemporaryFile();
       final bytes = makeFakeExeBytes();
-      File(fakeExeFileName).writeAsBytesSync(bytes);
+      temporary.file.writeAsBytesSync(bytes);
     });
 
     tearDown(() {
-      tmpDir.deleteSync();
+      temporary.close();
     });
   });
 }

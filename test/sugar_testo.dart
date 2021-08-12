@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:path/path.dart';
 import 'package:test/test.dart' as native_test;
 
 extension StringTestTools on String {
@@ -20,5 +23,26 @@ extension StringTestTools on String {
 
   String toPrintable() {
     return replaceAll('->', ' ↩️️ ');
+  }
+}
+
+class TemporaryFile {
+  late Directory dir;
+  late File file;
+
+  TemporaryFile() {
+    dir = Directory.systemTemp.createTempSync();
+    file = File(join(dir.path, 'fake_name'))..createSync();
+  }
+
+  void close() {
+    if (dir.existsSync()) {
+      dir.deleteSync(recursive: true);
+    }
+  }
+
+  @override
+  String toString() {
+    return file.path;
   }
 }
